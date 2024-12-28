@@ -1,0 +1,3 @@
+#!/usr/bin/env execlineb
+importas scan S6_USER_SCAN
+rm -rf ${scan}

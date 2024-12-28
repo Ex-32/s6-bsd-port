@@ -1,0 +1,4 @@
+#!/usr/bin/env execlineb
+importas env S6_USER_ENV
+redirfd -w 1 ${env}/DBUS_SESSION_BUS_ADDRESS dbus-daemon --nofork --session --print-address
+

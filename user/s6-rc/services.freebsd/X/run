@@ -1,0 +1,25 @@
+#!/bin/sh
+
+d=0
+while [ -e "/tmp/.X${d}-lock" -o -S "/tmp/.X11-unix/X${d}" ] ; do d=$(($d + 1)) ; done
+export DISPLAY=":${d}"
+echo "$DISPLAY" > "${S6_USER_ENV}/DISPLAY"
+
+cookie="$(openssl rand -hex 16)"
+if [ -z "$cookie" ] ; then
+	printf "error: unable to generate xauth cookie\n" 1>&2
+	exit 125
+fi
+
+if [ -z "$XAUTHORITY" ] ; then
+	mkdir -p ./data
+	touch ./data/Xauthority
+	export XAUTHORITY="$(realpath ./data/Xauthority)"
+fi
+echo "$XAUTHORITY" > "${S6_USER_ENV}/XAUTHORITY"
+
+xauth << EOF
+add $DISPLAY . $cookie
+EOF
+
+exec X "$DISPLAY" -auth "$XAUTHORITY"

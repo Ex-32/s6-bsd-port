@@ -1,0 +1,3 @@
+#!/bin/sh
+. ./data/options.conf
+exec $dhclient -d $if

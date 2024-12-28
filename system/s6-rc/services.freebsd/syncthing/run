@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. ./data/options.conf
+
+[ -d ${syncthing_home} ] || install -d -o ${syncthing_user} -g ${syncthing_group} ${syncthing_home}
+[ -e ${syncthing_log_file} ] || install -o ${syncthing_user} -g ${syncthing_group} /dev/null ${syncthing_log_file}
+
+# for some reason syncthing will always hang if $HOME is unset...
+export HOME="$syncthing_home"
+
+exec s6-setuidgid "$syncthing_user" "$syncthing" "-home=${syncthing_home}" "-logfile=${syncthing_log_file}" -no-browser
