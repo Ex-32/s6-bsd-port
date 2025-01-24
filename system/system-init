@@ -1,6 +1,0 @@
-#!/bin/sh
-export PATH="${PATH}:/usr/local/bin:/usr/local/sbin"
-mkdir -p /run &&
-mount -t tmpfs -o size=1g none /run &&
-cp -a /etc/s6 /run/services &&
-exec s6-svscanboot /run/services

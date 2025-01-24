@@ -1,4 +1,0 @@
-#!/bin/sh
-rm -r $(realpath /run/live)
-rm /run/live
-s6-rc -d change default

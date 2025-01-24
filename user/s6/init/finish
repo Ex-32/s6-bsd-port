@@ -1,3 +1,0 @@
-#!/bin/sh
-s6-svscanctl -t "${S6_USER_SCAN}"
-exit 125

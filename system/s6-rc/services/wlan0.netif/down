@@ -1,3 +1,0 @@
-define child wlan0
-define parent bwn0
-/sbin/ifconfig -n $child destroy
