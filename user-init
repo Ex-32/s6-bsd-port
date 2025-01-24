@@ -1,0 +1,18 @@
+#!/bin/sh
+
+S6="${HOME}/s6"
+
+RUN_DIR="$(mktemp -d "/tmp/run.${USER}.XXXX")"
+ln -sF "$RUN_DIR" "${S6}/run"
+
+S6_USER_SCAN="${RUN_DIR}/services" ; export S6_USER_SCAN
+cp -a "${S6}/rc/init" "$S6_USER_SCAN"
+
+S6_USER_ENV="${RUN_DIR}/env" ; mkdir "$S6_USER_ENV" ; export S6_USER_ENV
+S6_USER_LIVE="${RUN_DIR}/live" ; export S6_USER_LIVE
+
+#LOG_FILE="${S6}/svscan.log"
+#[ -e "${LOG_FILE}" ] && mv "${LOG_FILE}" "${LOG_FILE}.old"
+
+#exec redirfd -r 0 /dev/null redirfd -w 1 "$LOG_FILE" fdmove -c 2 1 s6-svscan "${S6_USER_SCAN}"
+exec s6-svscan "$S6_USER_SCAN"

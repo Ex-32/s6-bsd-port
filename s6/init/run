@@ -1,0 +1,11 @@
+#!/bin/sh
+
+s6-rc-init -c "${HOME}/s6/rc/compiled" -l "$S6_USER_LIVE" "$S6_USER_SCAN"
+s6-rc -l "$S6_USER_LIVE" change default
+
+mkdir -p ./data
+LOGOUT_FIFO="$(realpath ./data)/logout_fifo"
+mkfifo -m 600 "$LOGOUT_FIFO"
+echo "$LOGOUT_FIFO" > "${S6_USER_ENV}/LOGOUT_FIFO"
+
+exec cat < "$LOGOUT_FIFO"
