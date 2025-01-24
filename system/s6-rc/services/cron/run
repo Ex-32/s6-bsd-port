@@ -1,3 +1,0 @@
-#!/bin/sh
-. ./data/options.conf
-exec "$cron" -n -s -j "$jitter" -J "$su_jitter"
