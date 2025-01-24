@@ -1,0 +1,3 @@
+#!/bin/sh
+. ./data/options.conf
+exec "$powerdxx" --foreground > /dev/null

@@ -1,0 +1,3 @@
+#!/bin/sh
+. ./data/options.conf
+exec "$wpa_supplicant" -i wlan0 -c /etc/wpa_supplicant.conf -D bsd
